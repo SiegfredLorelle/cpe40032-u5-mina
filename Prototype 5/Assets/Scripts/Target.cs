@@ -50,9 +50,11 @@ public class Target : MonoBehaviour
     {
         Destroy(gameObject);
 
-        if (!gameObject.CompareTag("Bad"))
+        if (gameManager.isGameAcitve && !gameObject.CompareTag("Bad"))
         {
-            gameManager.GameOver();
+            gameManager.UpdateLives(-1);
+
+
         }
     }
 

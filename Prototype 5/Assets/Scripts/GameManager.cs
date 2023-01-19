@@ -8,11 +8,13 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public List<GameObject> targets;
+    public TextMeshProUGUI livesText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI gameOverText;
     public GameObject titleScreen;
     public Button restartButton;
     public bool isGameAcitve;
+    public int lives;
     public int score;
     public float spawnRate = 1.0f;
 
@@ -47,6 +49,17 @@ public class GameManager : MonoBehaviour
         scoreText.text = $"Score: {score}";
     }
 
+    public void UpdateLives(int livesToAdd)
+    {
+        lives += livesToAdd;
+        livesText.text = $"Lives: {lives}";
+
+        if (lives == 0)
+        {
+            GameOver();
+        }
+    }
+
     public void GameOver()
     {
         restartButton.gameObject.SetActive(true);
@@ -63,9 +76,11 @@ public class GameManager : MonoBehaviour
     {
         isGameAcitve = true;
         score = 0;
+        lives = 3;
         spawnRate /= difficulty;
         StartCoroutine(SpawnTarget());
-        UpdateScore(score);
+        UpdateScore(0);
+        UpdateLives(0);
 
         titleScreen.SetActive(false);
     }
