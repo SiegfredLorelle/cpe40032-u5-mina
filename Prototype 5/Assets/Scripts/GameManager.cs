@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public List<GameObject> targets;
+    public AudioSource backgroundMusic;
     public TextMeshProUGUI livesText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI gameOverText;
@@ -22,8 +23,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-
+        backgroundMusic = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -65,6 +65,8 @@ public class GameManager : MonoBehaviour
         restartButton.gameObject.SetActive(true);
         gameOverText.gameObject.SetActive(true);
         isGameAcitve = false;
+
+        backgroundMusic.Stop();
     }
 
     public void RestartGame()
