@@ -14,7 +14,9 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI gameOverText;
     public GameObject titleScreen;
     public Button restartButton;
+    public GameObject pauseUI;
     public bool isGameAcitve;
+    public bool inStartMenu;
     public int lives;
     public int score;
     public float spawnRate = 1.0f;
@@ -24,11 +26,19 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         backgroundMusic = GetComponent<AudioSource>();
+        isGameAcitve = false;
+        inStartMenu = true;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!inStartMenu && Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseGame();
+        }
+
 
     }
 
@@ -65,6 +75,7 @@ public class GameManager : MonoBehaviour
         restartButton.gameObject.SetActive(true);
         gameOverText.gameObject.SetActive(true);
         isGameAcitve = false;
+        inStartMenu = true;
 
         backgroundMusic.Stop();
     }
@@ -77,6 +88,7 @@ public class GameManager : MonoBehaviour
     public void StartGame(int difficulty)
     {
         isGameAcitve = true;
+        inStartMenu = false;
         score = 0;
         lives = 3;
         spawnRate /= difficulty;
@@ -85,6 +97,26 @@ public class GameManager : MonoBehaviour
         UpdateLives(0);
 
         titleScreen.SetActive(false);
+    }
+
+    public void PauseGame()
+    {
+        if (Time.timeScale == 1)
+        {
+            Time.timeScale = 0;
+            pauseUI.SetActive(true);
+            isGameAcitve = false;
+            backgroundMusic.Pause();
+
+        }
+        else
+        {
+            Time.timeScale = 1;
+            pauseUI.SetActive(false);
+            isGameAcitve = true;
+            backgroundMusic.UnPause();
+
+        }
     }
 
 }
