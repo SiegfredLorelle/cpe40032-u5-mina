@@ -19,16 +19,10 @@ public class DifficultyButton : MonoBehaviour
         button.onClick.AddListener(SetDifficulty);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-
-    }
-
+    // Called on clicking difficulty buttons (easy, medium, hard btns)
     void SetDifficulty()
     {
-        Debug.Log($"{gameObject.name} was clicked.");
+        // Start the game and pass the difficulty of the clicked button
         gameManager.StartGame(difficulty);
     }
 }
